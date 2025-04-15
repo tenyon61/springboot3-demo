@@ -1,0 +1,117 @@
+# 公共配置文件
+server:
+  address: 0.0.0.0
+  port: 8072
+  servlet:
+    context-path: /
+    # cookie 30 天过期
+    session:
+      cookie:
+        max-age: 2592000
+        path: "/"
+spring:
+  application:
+    name: springboot3-demo
+  # 默认 local 环境
+  profiles:
+    active: local
+  # 文件上传
+  servlet:
+    multipart:
+      # 大小限制
+      max-file-size: 10MB
+  # 支持 swagger3
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  # session 配置
+  session:
+    timeout: 2592000
+  # 数据库配置
+  datasource:
+    url: jdbc:mysql://${datasource.mysql.host}:3306/demo?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&autoReconnect=false&useSSL=false
+    username: ${datasource.mysql.username}
+    password: ${datasource.mysql.password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      pool-name: HikariCPDatasource
+      minimum-idle: 5
+      idle-timeout: 180000
+      maximum-pool-size: 10
+      auto-commit: true
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+  data:
+    redis:
+      database: 6
+      host: ${datasource.redis.host}
+      port: 6379
+      password: ${datasource.redis.password}
+      jedis:
+        pool:
+          max-wait: -1
+          max-idle: 5
+          min-idle: 0
+          max-active: 20
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      # 全局逻辑删除的实体字段名
+      logic-delete-field: is_delete
+      # 逻辑已删除值（默认为 1）
+      logic-delete-value: 1
+      # 逻辑未删除值（默认为 0）
+      logic-not-delete-value: 0
+# 对象存储
+s3:
+  oss:
+    type: ${s3.oss.type}
+    accessKey: ${s3.oss.accessKey}
+    secretKey: ${s3.oss.secretKey}
+    endpoint: ${s3.oss.endpoint}
+    bucket: ${s3.oss.bucket}
+# springdoc-openapi项目配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.tenyon.web
+# knife4j的增强配置
+knife4j:
+  enable: true
+  production: false
+  setting:
+    language: zh_cn
+sa-token:
+  # token 名称（同时也是 cookie 名称）
+  token-name: satoken
+  # token 有效期（单位：秒） 默认30天，-1 代表永久有效
+  timeout: 2592000
+  # token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
+  active-timeout: -1
+  # 是否允许同一账号多地同时登录 （为 true 时允许一起登录, 为 false 时新登录挤掉旧登录）
+  is-concurrent: true
+  # 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）
+  is-share: true
+  # token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
+  token-style: uuid
+  # 是否输出操作日志
+  is-log: true
+wx:
+  mp:
+    callback: ${ty.wx.callback}
+    configs:
+      - appId: ${ty.wx.appId}
+        secret: ${ty.wx.secret}
+        token: ${ty.wx.token}
+        aesKey: ${ty.wx.aesKey}

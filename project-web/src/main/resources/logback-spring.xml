@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!--日志路径 -->
+    <property name="LOG_PATH" value="/data"/>
+    <property name="LOG_FILE" value="logs"/>
+    <springProperty name="APPNAME" scope="context" source="spring.application.name"/>
+
+    <!-- 格式化 [日志级别][日期和时间][记录器名称][方法名][行号] [...颜色...]-> 日志消息 -->
+    <property name="LOG_PATTERN"
+              value="[%highlight(%-5level)]%d{yyyy-MM-dd HH:mm:ss,GMT+8}[%cyan(%thread)][%green(%logger{56})] [%L]-> %m%n"/>
+
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- 过滤掉 trace 级别的日志-->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>trace</level>
+        </filter>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+    <!-- 全部日志的配置 -->
+    <appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/${LOG_FILE}/${APPNAME}.log</file>
+        <append>true</append>
+        <encoder>
+            <charset>utf-8</charset>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 按天生成日志文件 -->
+            <fileNamePattern>
+                ${LOG_PATH}/archived/${LOG_FILE}/${APPNAME}.%d{dd-MM-yyyy}.log
+            </fileNamePattern>
+            <!--保留天数-->
+            <maxHistory>7</maxHistory>
+            <!--单个文件的大小-->
+            <totalSizeCap>5GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+    <!-- error日志的配置-->
+    <appender name="fileError" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <file>${LOG_PATH}/${LOG_FILE}/${APPNAME}.error.log</file>
+        <append>true</append>
+        <encoder>
+            <charset>utf-8</charset>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${LOG_PATH}/archived/${LOG_FILE}/${APPNAME}.%d{dd-MM-yyyy}.error.log
+            </fileNamePattern>
+            <maxHistory>7</maxHistory>
+            <totalSizeCap>2GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <root level="info">
+        <!--文件输出-->
+        <appender-ref ref="fileAppender"/>
+        <appender-ref ref="fileError"/>
+        <!--制台输出-->
+        <appender-ref ref="stdout"/>
+    </root>
+
+</configuration>
