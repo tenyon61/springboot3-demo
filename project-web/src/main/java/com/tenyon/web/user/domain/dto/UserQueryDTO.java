@@ -1,9 +1,7 @@
 package com.tenyon.web.user.domain.dto;
 
-import com.tenyon.web.common.constant.BmsConstant;
 import com.tenyon.web.common.domain.vo.req.PageReq;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
