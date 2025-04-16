@@ -31,9 +31,9 @@ public class User implements Serializable {
     private String unionId;
 
     /**
-     * 公众号openId
+     * 公众号mpOpenId
      */
-    private String openId;
+    private String mpOpenId;
 
     /**
      * 用户昵称

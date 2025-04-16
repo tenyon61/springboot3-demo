@@ -90,10 +90,10 @@ public interface UserService extends IService<User> {
     /**
      * 根据openId获取用户
      *
-     * @param openId 微信开放平台 id
+     * @param mpOpenId 微信开放平台 id
      * @return 用户
      */
-    User getUserByOpenId(String openId);
+    User getUserByMpOpenId(String mpOpenId);
 
     String login(Long uid);
 }

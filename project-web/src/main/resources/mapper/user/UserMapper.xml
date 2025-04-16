@@ -9,7 +9,7 @@
         <result property="account" column="account"/>
         <result property="password" column="password"/>
         <result property="unionId" column="unionId"/>
-        <result property="openId" column="openId"/>
+        <result property="mpOpenId" column="mpOpenId"/>
         <result property="name" column="name"/>
         <result property="avatar" column="avatar"/>
         <result property="profile" column="profile"/>
@@ -30,7 +30,7 @@
 
     <sql id="Base_Column_List">
         id
-        ,account,password,unionId,openId,name,
+        ,account,password,unionId,mpOpenId,name,
         avatar,profile,sex,email,phone,
         userRole,vipNumber,vipCode,vipExpireTime,shareCode,
         inviteUser,editTime,createTime,updateTime,isDelete

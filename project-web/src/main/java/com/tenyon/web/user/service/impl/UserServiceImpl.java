@@ -185,8 +185,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public User getUserByOpenId(String openId) {
-        return lambdaQuery().eq(User::getOpenId, openId).one();
+    public User getUserByMpOpenId(String mpOpenId) {
+        return lambdaQuery().eq(User::getMpOpenId, mpOpenId).one();
     }
 
     @Override

@@ -1,17 +1,17 @@
 /*
  Navicat Premium Dump SQL
 
- Source Server         : mysql8.4.4
+ Source Server         : mysql8
  Source Server Type    : MySQL
- Source Server Version : 80404 (8.4.4)
+ Source Server Version : 80405 (8.4.5)
  Source Host           : 127.0.0.1:3306
  Source Schema         : demo
 
  Target Server Type    : MySQL
- Target Server Version : 80404 (8.4.4)
+ Target Server Version : 80405 (8.4.5)
  File Encoding         : 65001
 
- Date: 15/04/2025 14:11:41
+ Date: 16/04/2025 17:12:59
 */
 
 SET NAMES utf8mb4;
@@ -24,44 +24,43 @@ FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`
 (
-    `id`            bigint UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '用户id',
-    `account`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '账号',
-    `password`      varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '密码',
-    `name`          varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '用户昵称',
-    `avatar`        varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '用户头像',
+    `id`            bigint                                                        NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `account`       varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '账号',
+    `password`      varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '密码',
+    `unionId`       varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '微信开放平台id',
+    `mpOpenId`      varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '公众号openId',
+    `name`          varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '用户昵称',
+    `avatar`        varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '用户头像',
+    `profile`       varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '用户简介',
+    `sex`           tinyint NULL DEFAULT NULL COMMENT '性别 0为男性，1为女性',
     `email`         varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '邮箱',
     `phone`         varchar(13) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '手机号',
-    `profile`       varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '用户简介',
-    `sex`           tinyint NULL DEFAULT NULL COMMENT '性别 0为男性，1为女性',
-    `open_id`       char(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '微信openid用户标识',
-    `active_status` tinyint NULL DEFAULT 2 COMMENT '在线状态 1在线 2离线',
-    `last_opt_time` datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后上下线时间',
-    `ip_info`       json NULL COMMENT 'ip信息',
-    `item_id`       bigint NULL DEFAULT NULL COMMENT '佩戴的徽章id',
-    `user_role`     varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'user' COMMENT '用户角色：user/admin/ban',
-    `status`        int NULL DEFAULT 0 COMMENT '使用状态 0.正常 1拉黑',
-    `create_time`   datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `update_time`   datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-    `is_delete`     tinyint                                                      NOT NULL DEFAULT 0 COMMENT '是否删除',
+    `userRole`      varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL DEFAULT 'user' COMMENT '用户角色：user/admin/ban',
+    `vipNumber`     bigint NULL DEFAULT NULL COMMENT '会员编号',
+    `vipCode`       varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '会员兑换码',
+    `vipExpireTime` datetime NULL DEFAULT NULL COMMENT '会员过期时间',
+    `shareCode`     varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '分享码',
+    `inviteUser`    bigint NULL DEFAULT NULL COMMENT '邀请用户id',
+    `editTime`      datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '编辑时间',
+    `createTime`    datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updateTime`    datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `isDelete`      tinyint                                                       NOT NULL DEFAULT 0 COMMENT '是否删除',
     PRIMARY KEY (`id`) USING BTREE,
-    UNIQUE INDEX `uniq_open_id`(`open_id` ASC) USING BTREE,
-    UNIQUE INDEX `uniq_name`(`name` ASC) USING BTREE,
-    INDEX           `idx_create_time`(`create_time` ASC) USING BTREE,
-    INDEX           `idx_update_time`(`update_time` ASC) USING BTREE,
-    INDEX           `idx_active_status_last_opt_time`(`active_status` ASC, `last_opt_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1908127282626453506 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '用户表' ROW_FORMAT = DYNAMIC;
+    INDEX           `idx_unionId`(`unionId` ASC) USING BTREE,
+    INDEX           `uk_userAccount`(`account` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1877314116692004867 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '系统-用户表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 INSERT INTO `user`
-VALUES (1, 'admin', '492a65bef0ab2fac75758f004f3eaf35', '管理员', 'https://api.oss.cqbo.com/tenyon/assets/default.png',
-        NULL, NULL, 'admin', NULL, NULL, 2, '2025-04-03 12:30:09', NULL, NULL, 'admin', 0, '2025-04-03 12:30:09',
-        '2025-04-15 14:11:28', 0);
+VALUES (1, 'admin', '492a65bef0ab2fac75758f004f3eaf35', '', 'mpOpenId', '系统管理员',
+        'https://api.oss.cqbo.com/tenyon/assets/default.png', 'admin', 0, 'tenyon@cqbo.com', '13713173611', 'admin',
+        NULL, NULL, NULL, NULL, NULL, '2024-11-28 14:50:35', '2024-11-28 14:50:35', '2025-04-16 16:20:31', 0);
 INSERT INTO `user`
-VALUES (2, 'user', '492a65bef0ab2fac75758f004f3eaf35', '用户', 'https://api.oss.cqbo.com/tenyon/assets/default.png',
-        NULL, NULL, 'user', NULL, NULL, 2, '2025-04-15 14:11:12', NULL, NULL, 'user', 0, '2025-04-15 14:11:12',
-        '2025-04-15 14:11:26', 0);
+VALUES (2, 'user', '492a65bef0ab2fac75758f004f3eaf35', '', '', '用户',
+        'https://api.oss.cqbo.com/tenyon/assets/default.png', 'user', 1, NULL, NULL, 'user', NULL, NULL, NULL, NULL,
+        NULL, '2024-11-28 14:50:35', '2024-11-28 14:50:35', '2025-04-16 16:23:34', 0);
 
 SET
 FOREIGN_KEY_CHECKS = 1;
