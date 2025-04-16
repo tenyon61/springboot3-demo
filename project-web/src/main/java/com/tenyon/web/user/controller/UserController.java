@@ -148,4 +148,14 @@ public class UserController {
         ThrowUtils.throwIf(!res, ErrorCode.OPERATION_ERROR);
         return RtnData.success(true);
     }
+
+    @Operation(summary = "重置密码")
+    @PutMapping("/resetPwd/{id}")
+    public RtnData<Boolean> resetPwd(@PathVariable long id) {
+        User user = userService.getById(id);
+        user.setPassword(DigestUtils.md5DigestAsHex((BmsConstant.ENCRYPT_SALT + "11111").getBytes()));
+        boolean res = userService.updateById(user);
+        ThrowUtils.throwIf(!res, ErrorCode.OPERATION_ERROR, "密码重置失败");
+        return RtnData.success(true);
+    }
 }
