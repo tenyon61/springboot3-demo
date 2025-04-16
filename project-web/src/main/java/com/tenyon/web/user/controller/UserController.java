@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tenyon.web.common.annotation.AuthCheck;
 import com.tenyon.web.common.constant.BmsConstant;
 import com.tenyon.web.common.constant.UserConstant;
-import com.tenyon.web.common.domain.vo.req.DeleteReq;
 import com.tenyon.web.common.domain.vo.resp.RtnData;
 import com.tenyon.web.common.exception.BusinessException;
 import com.tenyon.web.common.exception.ErrorCode;
@@ -19,8 +18,6 @@ import com.tenyon.web.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +35,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
-    Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Resource
     private UserService userService;
@@ -66,14 +62,11 @@ public class UserController {
 
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     @Operation(summary = "删除用户")
-    @PostMapping("/delete")
-    public RtnData<Boolean> deleteUser(@RequestBody DeleteReq deleteReq) {
-        if (deleteReq == null || deleteReq.getId() <= 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-        }
-        boolean res = userService.removeById(deleteReq.getId());
+    @DeleteMapping("/delete/{id}")
+    public RtnData<Boolean> deleteUser(@PathVariable long id) {
+        boolean res = userService.removeById(id);
         ThrowUtils.throwIf(!res, ErrorCode.OPERATION_ERROR);
-        return RtnData.success(res);
+        return RtnData.success(true);
     }
 
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
@@ -103,7 +96,7 @@ public class UserController {
     }
 
     @Operation(summary = "根据 id 获取包装类")
-    @GetMapping("/getVO")
+    @GetMapping("/getUserVO")
     public RtnData<UserVO> getUserVOById(long id) {
         RtnData<User> response = getUserById(id);
         User user = response.getData();
@@ -112,8 +105,8 @@ public class UserController {
 
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     @Operation(summary = "分页获取用户列表（仅管理员）")
-    @PostMapping("/listPage")
-    public RtnData<Page<User>> listUserByPage(@RequestBody UserQueryDTO userQueryRequest) {
+    @PostMapping("/getUserPage")
+    public RtnData<Page<User>> getUserPage(@RequestBody UserQueryDTO userQueryRequest) {
         long current = userQueryRequest.getCurrent();
         long size = userQueryRequest.getPageSize();
         Page<User> userPage = userService.page(new Page<>(current, size),
@@ -122,8 +115,8 @@ public class UserController {
     }
 
     @Operation(summary = "分页获取用户封装列表（仅管理员）")
-    @PostMapping("/listPageVO")
-    public RtnData<Page<UserVO>> listUserVOByPage(@RequestBody UserQueryDTO userQueryRequest) {
+    @PostMapping("/getUserVOPage")
+    public RtnData<Page<UserVO>> getUserVOPage(@RequestBody UserQueryDTO userQueryRequest) {
         if (userQueryRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }

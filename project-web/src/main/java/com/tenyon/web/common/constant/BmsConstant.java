@@ -43,7 +43,7 @@ public interface BmsConstant {
     /**
      * 邮箱的正则
      */
-    String REGEX_EMAIL = "^[a-zA-Z0-9._%+-]+@(qq|163|gmail)\\.com$";
+    String REGEX_EMAIL = "^[a-zA-Z0-9._%+-]+@(qq|163|gmail|cqbo)\\.com$";
 
     /**
      * 手机号的正则
