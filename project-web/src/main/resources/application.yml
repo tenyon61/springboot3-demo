@@ -56,12 +56,12 @@ spring:
           max-active: 20
 mybatis-plus:
   configuration:
-    map-underscore-to-camel-case: true
+    map-underscore-to-camel-case: false
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     db-config:
       # 全局逻辑删除的实体字段名
-      logic-delete-field: is_delete
+      logic-delete-field: isDelete
       # 逻辑已删除值（默认为 1）
       logic-delete-value: 1
       # 逻辑未删除值（默认为 0）

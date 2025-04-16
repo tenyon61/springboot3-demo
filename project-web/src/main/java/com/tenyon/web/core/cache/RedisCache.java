@@ -128,8 +128,8 @@ public class RedisCache<V> {
     /**
      * 将一个值插入到列表的左边（头部）。如果指定了过期时间，则设置过期时间
      *
-     * @param key 键
-     * @param value 值
+     * @param key     键
+     * @param value   值
      * @param expired s
      * @return
      */
@@ -151,8 +151,8 @@ public class RedisCache<V> {
     /**
      * 将多个值插入到列表的左边（头部）。如果指定了过期时间，则设置过期时间
      *
-     * @param key 键
-     * @param values 值列表
+     * @param key     键
+     * @param values  值列表
      * @param expired s
      * @return
      */

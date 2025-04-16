@@ -26,6 +26,9 @@ public class UserVO implements Serializable {
     @Schema(description = "用户简介")
     private String profile;
 
+    @Schema(description = "性别")
+    private Integer sex;
+
     @Schema(description = "邮箱")
     private String email;
 

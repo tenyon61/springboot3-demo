@@ -19,21 +19,28 @@
 ## 🚀 快速开始
 
 ### 环境要求
+
 - JDK 17+
 - MySQL 8.0+
 - Redis 7.x+
 - Maven 3.9+
 
 ### 启动步骤
+
 1. **克隆项目**
+
 ```bash
    git clone https://github.com/tenyon61/springboot3-demo.git
 ```
+
 2、**修改配置文件**
+
 ```text
    默认启动是 local，建议新建application-local.properties替换配置
 ```
+
 3、**启动项目**
+
 ```text
    访问接口文档 http://localhost:8072/doc.html
 ```
