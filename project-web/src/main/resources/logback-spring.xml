@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <!--日志路径 -->
-    <property name="LOG_PATH" value="/data"/>
+    <property name="LOG_PATH" value="${user.dir}/data"/>
     <property name="LOG_FILE" value="logs"/>
     <springProperty name="APPNAME" scope="context" source="spring.application.name"/>
 
-    <!-- 格式化 [日志级别][日期和时间][记录器名称][方法名][行号] [...颜色...]-> 日志消息 -->
-    <property name="LOG_PATTERN"
+    <!-- 控制台格式化 [日志级别][日期和时间][记录器名称][方法名][行号] [...颜色...]-> 日志消息  -->
+    <property name="CONSOLE_PATTERN"
               value="[%highlight(%-5level)]%d{yyyy-MM-dd HH:mm:ss,GMT+8}[%cyan(%thread)][%green(%logger{56})] [%L]-> %m%n"/>
+    <!-- 文件格式化 [日志级别][日期和时间][记录器名称][方法名][行号] -> 日志消息   -->
+    <property name="FILE_PATTERN"
+              value="[%level]%d{yyyy-MM-dd HH:mm:ss,GMT+8}[%thread][%logger{56}] [%L]-> %m%n"/>
 
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
-        <!-- 过滤掉 trace 级别的日志-->
+        <!-- 过滤掉 trace 级别的日志 -->
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>trace</level>
+            <level>debug</level>
         </filter>
         <encoder>
-            <pattern>${LOG_PATTERN}</pattern>
+            <charset>utf-8</charset>
+            <pattern>${CONSOLE_PATTERN}</pattern>
         </encoder>
     </appender>
     <!-- 全部日志的配置 -->
@@ -24,7 +28,7 @@
         <append>true</append>
         <encoder>
             <charset>utf-8</charset>
-            <pattern>${LOG_PATTERN}</pattern>
+            <pattern>${FILE_PATTERN}</pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 按天生成日志文件 -->
@@ -48,7 +52,7 @@
         <append>true</append>
         <encoder>
             <charset>utf-8</charset>
-            <pattern>${LOG_PATTERN}</pattern>
+            <pattern>${FILE_PATTERN}</pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>
