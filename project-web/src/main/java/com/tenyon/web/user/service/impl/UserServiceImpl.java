@@ -1,6 +1,7 @@
 package com.tenyon.web.user.service.impl;
 
 import cn.dev33.satoken.stp.SaTokenInfo;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -13,7 +14,6 @@ import com.tenyon.web.common.exception.BusinessException;
 import com.tenyon.web.common.exception.ErrorCode;
 import com.tenyon.web.common.exception.ThrowUtils;
 import com.tenyon.web.common.utils.SqlUtils;
-import com.tenyon.web.core.auth.StpKit;
 import com.tenyon.web.user.domain.dto.UserQueryDTO;
 import com.tenyon.web.user.domain.entity.User;
 import com.tenyon.web.user.domain.enums.UserRoleEnum;
@@ -93,8 +93,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户不存在或密码错误");
         }
         // 3. 记录用户的登录态
-        StpKit.BMS.login(user.getId());
-        StpKit.BMS.getSession().set(UserConstant.USER_LOGIN_STATE, user);
+        StpUtil.login(user.getId());
+        StpUtil.getSession().set(UserConstant.USER_LOGIN_STATE, user);
         return this.getLoginUserVO(user);
     }
 
@@ -106,10 +106,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public User getLoginUser() {
         // 先判断是否已登录
-        ThrowUtils.throwIf(!StpKit.BMS.isLogin(), ErrorCode.NOT_LOGIN_ERROR);
-        Object userObj = StpKit.BMS.getSession().get(UserConstant.USER_LOGIN_STATE);
+        ThrowUtils.throwIf(!StpUtil.isLogin(), ErrorCode.NOT_LOGIN_ERROR);
+        Object userObj = StpUtil.getSession().get(UserConstant.USER_LOGIN_STATE);
         User currentUser = (User) userObj;
-        ThrowUtils.throwIf(!StpKit.BMS.isLogin(), ErrorCode.NOT_LOGIN_ERROR);
+        ThrowUtils.throwIf(!StpUtil.isLogin(), ErrorCode.NOT_LOGIN_ERROR);
         if (currentUser == null || currentUser.getId() == null) {
             throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
         }
@@ -124,10 +124,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public boolean logout() {
-        ThrowUtils.throwIf(!StpKit.BMS.isLogin(), ErrorCode.NOT_LOGIN_ERROR);
+        ThrowUtils.throwIf(!StpUtil.isLogin(), ErrorCode.NOT_LOGIN_ERROR);
         // 移除登录态
-        StpKit.BMS.getSession().removeTerminal(UserConstant.USER_LOGIN_STATE);
-        StpKit.BMS.logout();
+        StpUtil.getSession().removeTerminal(UserConstant.USER_LOGIN_STATE);
+        StpUtil.logout();
         return true;
     }
 
@@ -139,7 +139,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         LoginUserVO loginUserVO = new LoginUserVO();
         BeanUtils.copyProperties(user, loginUserVO);
         // 组装token
-        SaTokenInfo tokenInfo = StpKit.BMS.getTokenInfo();
+        SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
         loginUserVO.setToken(tokenInfo.tokenValue);
         return loginUserVO;
     }
@@ -198,9 +198,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户不存在或密码错误");
         }
         // 3. 记录用户的登录态
-        StpKit.BMS.login(user.getId());
-        StpKit.BMS.getSession().set(UserConstant.USER_LOGIN_STATE, user);
-        SaTokenInfo tokenInfo = StpKit.BMS.getTokenInfo();
+        StpUtil.login(user.getId());
+        StpUtil.getSession().set(UserConstant.USER_LOGIN_STATE, user);
+        SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
         return tokenInfo.tokenValue;
     }
 }
