@@ -13,19 +13,16 @@ import org.springframework.context.annotation.Configuration;
  * @date 2024/12/24
  */
 @Configuration
-public class Knife4jConfig {
+public class SwaggerConfig {
     @Bean
-    public OpenAPI springShopOpenAPI() {
+    public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 // 接口文档标题
                 .info(new Info().title("Web接口文档API")
-                        // 接口文档简介
-                        .description("Web项目接口文档")
-                        // 接口文档版本
                         .version("1.0.0")
+                        .description("Web项目接口文档")
                         .termsOfService("https://tenyon.cn/cc")
-                        // 开发者联系方式
-                        .contact(new Contact().name("Yovvis")
+                        .contact(new Contact().name("tenyon")
                                 .email("tenyon@cqbo.com")));
     }
 }

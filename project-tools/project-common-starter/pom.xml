@@ -64,7 +64,7 @@
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-jsqlparser-4.9</artifactId>
+            <artifactId>mybatis-plus-jsqlparser</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.xingfudeshi</groupId>
