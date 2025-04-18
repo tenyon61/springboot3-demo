@@ -41,7 +41,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 
     @Override
-    public long register(String account, String password, String checkPassword) {
+    public Long register(String account, String password, String checkPassword) {
         // 1. 校验
         // 密码和校验密码相同
         if (!password.equals(checkPassword)) {
@@ -70,7 +70,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Transactional
     @Override
-    public long register(User user) {
+    public Long register(User user) {
         user.setUserRole("user");
         boolean res = this.save(user);
         ThrowUtils.throwIf(!res, ErrorCode.SYSTEM_ERROR, "注册失败，数据库错误");
@@ -121,7 +121,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public boolean logout() {
+    public Boolean logout() {
         ThrowUtils.throwIf(!StpUtil.isLogin(), ErrorCode.NOT_LOGIN_ERROR);
         // 移除登录态
         StpUtil.getSession().removeTerminal(UserConstant.USER_LOGIN_STATE);

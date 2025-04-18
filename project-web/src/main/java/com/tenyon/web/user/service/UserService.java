@@ -31,7 +31,7 @@ public interface UserService extends IService<User> {
      * @param checkPassword 校验密码
      * @return 新用户 id
      */
-    long register(String account, String password, String checkPassword);
+    Long register(String account, String password, String checkPassword);
 
 
     /**
@@ -40,7 +40,7 @@ public interface UserService extends IService<User> {
      * @param user 用户实体
      * @return 新用户 id
      */
-    long register(User user);
+    Long register(User user);
 
     /**
      * 获取当前登录用户
@@ -52,14 +52,14 @@ public interface UserService extends IService<User> {
     /**
      * 用户注销
      *
-     * @return 空
+     * @return Boolean
      */
-    boolean logout();
+    Boolean logout();
 
     /**
      * 获取脱敏的已登录用户信息
      *
-     * @return 当前登录用户信息
+     * @return LoginUserVO
      */
     LoginUserVO getLoginUserVO(User user);
 
@@ -67,15 +67,15 @@ public interface UserService extends IService<User> {
      * 获取脱敏的用户信息
      *
      * @param user 用户实体
-     * @return 脱敏的用户
+     * @return UserVO
      */
     UserVO getUserVO(User user);
 
     /**
      * 获取脱敏的用户信息
      *
-     * @param userList
-     * @return
+     * @param userList 用户列表
+     * @return List<UserVO>
      */
     List<UserVO> getUserVOList(List<User> userList);
 
@@ -91,7 +91,7 @@ public interface UserService extends IService<User> {
      * 根据openId获取用户
      *
      * @param mpOpenId 微信开放平台 id
-     * @return 用户
+     * @return User
      */
     User getUserByMpOpenId(String mpOpenId);
 
