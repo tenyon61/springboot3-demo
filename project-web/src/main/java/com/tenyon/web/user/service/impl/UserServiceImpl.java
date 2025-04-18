@@ -107,9 +107,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public User getLoginUser() {
         // 先判断是否已登录
         ThrowUtils.throwIf(!StpUtil.isLogin(), ErrorCode.NOT_LOGIN_ERROR);
-        Object userObj = StpUtil.getSession().get(UserConstant.USER_LOGIN_STATE);
-        User currentUser = (User) userObj;
-        ThrowUtils.throwIf(!StpUtil.isLogin(), ErrorCode.NOT_LOGIN_ERROR);
+        User currentUser = (User) StpUtil.getSession().get(UserConstant.USER_LOGIN_STATE);
         if (currentUser == null || currentUser.getId() == null) {
             throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
         }
