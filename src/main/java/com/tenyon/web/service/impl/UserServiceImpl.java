@@ -14,7 +14,7 @@ import com.tenyon.web.common.exception.BusinessException;
 import com.tenyon.web.common.exception.ErrorCode;
 import com.tenyon.web.common.exception.ThrowUtils;
 import com.tenyon.web.common.utils.SqlUtils;
-import com.tenyon.web.domain.dto.UserQueryDTO;
+import com.tenyon.web.domain.dto.user.UserQueryDTO;
 import com.tenyon.web.domain.entity.User;
 import com.tenyon.web.domain.enums.UserRoleEnum;
 import com.tenyon.web.domain.vo.user.LoginUserVO;

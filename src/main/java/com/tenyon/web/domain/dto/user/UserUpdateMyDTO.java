@@ -1,4 +1,4 @@
-package com.tenyon.web.domain.dto;
+package com.tenyon.web.domain.dto.user;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
