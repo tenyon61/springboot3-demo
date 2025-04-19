@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.cqbo</groupId>
-    <artifactId>likeboom</artifactId>
-    <version>1.0.0-sp1</version>
+    <groupId>com.tenyon</groupId>
+    <artifactId>springboot3-demo</artifactId>
+    <version>1.0.0-LTS</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
