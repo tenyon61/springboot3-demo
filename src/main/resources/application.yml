@@ -44,7 +44,7 @@ spring:
       connection-test-query: SELECT 1
   data:
     redis:
-      database: 6
+      database: 1
       host: ${datasource.redis.host}
       port: 6379
       password: ${datasource.redis.password}
