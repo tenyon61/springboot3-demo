@@ -18,12 +18,12 @@ public class User implements Serializable {
     /**
      * 账号
      */
-    private String account;
+    private String userAccount;
 
     /**
      * 密码
      */
-    private String password;
+    private String userPassword;
 
     /**
      * 微信开放平台id
@@ -38,17 +38,17 @@ public class User implements Serializable {
     /**
      * 用户昵称
      */
-    private String name;
+    private String userName;
 
     /**
      * 用户头像
      */
-    private String avatar;
+    private String userAvatar;
 
     /**
      * 用户简介
      */
-    private String profile;
+    private String userProfile;
 
     /**
      * 性别 0为男性，1为女性

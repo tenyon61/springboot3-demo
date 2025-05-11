@@ -14,10 +14,10 @@ public class LoginUserVO implements Serializable {
     private Long id;
 
     @Schema(description = "用户昵称")
-    private String name;
+    private String userName;
 
     @Schema(description = "用户头像")
-    private String avatar;
+    private String userAvatar;
 
     @Schema(description = "令牌")
     private String token;

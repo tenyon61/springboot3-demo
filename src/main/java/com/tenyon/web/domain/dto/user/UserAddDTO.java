@@ -15,10 +15,10 @@ public class UserAddDTO implements Serializable {
 
     @Min(value = 4, message = "账号不能少于4位")
     @Schema(description = "账号")
-    private String account;
+    private String userAccount;
 
     @Schema(description = "用户昵称")
-    private String name;
+    private String userName;
 
     @Schema(description = "性别")
     private Integer sex;

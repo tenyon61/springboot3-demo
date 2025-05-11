@@ -41,26 +41,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 
     @Override
-    public Long register(String account, String password, String checkPassword) {
+    public Long register(String userAccount, String userPassword, String checkPassword) {
         // 1. 校验
         // 密码和校验密码相同
-        if (!password.equals(checkPassword)) {
+        if (!userPassword.equals(checkPassword)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "两次输入的密码不一致");
         }
-        synchronized (account.intern()) {
+        synchronized (userAccount.intern()) {
             // 1.账户不能重复
             LambdaQueryWrapper<User> queryWrapper = Wrappers.lambdaQuery();
-            queryWrapper.eq(User::getAccount, account);
+            queryWrapper.eq(User::getUserAccount, userAccount);
             long count = this.count(queryWrapper);
             if (count > 0) {
                 throw new BusinessException(ErrorCode.PARAMS_ERROR, "账号重复");
             }
             // 2.加密
-            String encryptPassword = DigestUtils.md5DigestAsHex((BmsConstant.ENCRYPT_SALT + password).getBytes());
+            String encryptPassword = DigestUtils.md5DigestAsHex((BmsConstant.ENCRYPT_SALT + userPassword).getBytes());
             // 3.插入数据
             User user = new User();
-            user.setAccount(account);
-            user.setPassword(encryptPassword);
+            user.setUserAccount(userAccount);
+            user.setUserPassword(encryptPassword);
             user.setUserRole(UserRoleEnum.USER.getValue());
             boolean res = this.save(user);
             ThrowUtils.throwIf(!res, ErrorCode.SYSTEM_ERROR, "注册失败，数据库错误");
@@ -78,14 +78,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public LoginUserVO login(String account, String password) {
+    public LoginUserVO login(String userAccount, String userPassword) {
         // 1. 校验
         // 2. 加密
-        String encryptPassword = DigestUtils.md5DigestAsHex((BmsConstant.ENCRYPT_SALT + password).getBytes());
+        String encryptPassword = DigestUtils.md5DigestAsHex((BmsConstant.ENCRYPT_SALT + userPassword).getBytes());
         // 查询用户是否存在
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("account", account);
-        queryWrapper.eq("password", encryptPassword);
+        queryWrapper.eq("userAccount", userAccount);
+        queryWrapper.eq("userPassword", encryptPassword);
         User user = this.getOne(queryWrapper);
         // 用户不存在
         if (user == null) {
@@ -166,18 +166,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为空");
         }
         Long id = userQueryRequest.getId();
-        String name = userQueryRequest.getName();
-        String account = userQueryRequest.getAccount();
-        String profile = userQueryRequest.getProfile();
+        String userName = userQueryRequest.getUserName();
+        String userAccount = userQueryRequest.getUserAccount();
+        String userProfile = userQueryRequest.getUserProfile();
         String userRole = userQueryRequest.getUserRole();
         String sortField = userQueryRequest.getSortField();
         String sortOrder = userQueryRequest.getSortOrder();
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(ObjectUtil.isNotEmpty(id), "id", id);
-        queryWrapper.eq(StrUtil.isNotBlank(account), "account", account);
-        queryWrapper.eq(StrUtil.isNotBlank(userRole), "user_role", userRole);
-        queryWrapper.like(StrUtil.isNotBlank(profile), "profile", profile);
-        queryWrapper.like(StrUtil.isNotBlank(name), "name", name);
+        queryWrapper.eq(StrUtil.isNotBlank(userAccount), "userAcount", userAccount);
+        queryWrapper.eq(StrUtil.isNotBlank(userRole), "userRole", userRole);
+        queryWrapper.like(StrUtil.isNotBlank(userProfile), "userProfile", userProfile);
+        queryWrapper.like(StrUtil.isNotBlank(userName), "userName", userName);
         queryWrapper.orderBy(SqlUtils.validSortField(sortField), sortOrder.equals("ascend"), sortField);
         return queryWrapper;
     }

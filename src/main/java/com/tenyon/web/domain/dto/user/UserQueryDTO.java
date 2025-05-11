@@ -17,13 +17,13 @@ public class UserQueryDTO extends PageReq implements Serializable {
     private Long id;
 
     @Schema(description = "用户昵称")
-    private String name;
+    private String userName;
 
     @Schema(description = "用户账号")
-    private String account;
+    private String userAccount;
 
     @Schema(description = "简介")
-    private String profile;
+    private String userProfile;
 
     @Schema(description = "邮箱")
     private String email;

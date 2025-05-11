@@ -53,7 +53,7 @@ public class UserController {
         // 默认密码 11111
         String defaultPassword = "11111";
         String encryptPassword = DigestUtils.md5DigestAsHex((BmsConstant.ENCRYPT_SALT + defaultPassword).getBytes());
-        user.setPassword(encryptPassword);
+        user.setUserPassword(encryptPassword);
 
         boolean res = userService.save(user);
         ThrowUtils.throwIf(!res, ErrorCode.OPERATION_ERROR);
@@ -153,7 +153,7 @@ public class UserController {
     @PutMapping("/resetPwd/{id}")
     public RtnData<Boolean> resetPwd(@PathVariable long id) {
         User user = userService.getById(id);
-        user.setPassword(DigestUtils.md5DigestAsHex((BmsConstant.ENCRYPT_SALT + "11111").getBytes()));
+        user.setUserPassword(DigestUtils.md5DigestAsHex((BmsConstant.ENCRYPT_SALT + "11111").getBytes()));
         boolean res = userService.updateById(user);
         ThrowUtils.throwIf(!res, ErrorCode.OPERATION_ERROR, "密码重置失败");
         return RtnData.success(true);

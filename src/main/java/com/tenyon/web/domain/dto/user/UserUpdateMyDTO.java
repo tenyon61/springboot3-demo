@@ -11,13 +11,13 @@ import java.io.Serializable;
 public class UserUpdateMyDTO implements Serializable {
 
     @Schema(description = "用户昵称")
-    private String name;
+    private String userName;
 
     @Schema(description = "用户头像")
-    private String avatar;
+    private String userAvatar;
 
     @Schema(description = "简介")
-    private String profile;
+    private String userProfile;
 
     @Serial
     private static final long serialVersionUID = 1L;

@@ -35,8 +35,8 @@ public class AuthController {
         if (userLoginDTO == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        String account = userLoginDTO.getAccount();
-        String password = userLoginDTO.getPassword();
+        String account = userLoginDTO.getUserAccount();
+        String password = userLoginDTO.getUserPassword();
         LoginUserVO loginUserVO = userService.login(account, password);
         return RtnData.success(loginUserVO);
     }
@@ -47,8 +47,8 @@ public class AuthController {
         if (userRegisterDTO == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        String account = userRegisterDTO.getAccount();
-        String password = userRegisterDTO.getPassword();
+        String account = userRegisterDTO.getUserAccount();
+        String password = userRegisterDTO.getUserPassword();
         String checkPassword = userRegisterDTO.getCheckPassword();
         long userId = userService.register(account, password, checkPassword);
         return RtnData.success(userId);

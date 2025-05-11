@@ -6,13 +6,13 @@
 
     <resultMap id="BaseResultMap" type="com.tenyon.web.domain.entity.User">
         <id property="id" column="id"/>
-        <result property="account" column="account"/>
-        <result property="password" column="password"/>
+        <result property="userAccount" column="userAccount"/>
+        <result property="userPassword" column="userPassword"/>
         <result property="unionId" column="unionId"/>
         <result property="mpOpenId" column="mpOpenId"/>
-        <result property="name" column="name"/>
-        <result property="avatar" column="avatar"/>
-        <result property="profile" column="profile"/>
+        <result property="userName" column="userName"/>
+        <result property="userAvatar" column="userAvatar"/>
+        <result property="userProfile" column="userProfile"/>
         <result property="sex" column="sex"/>
         <result property="email" column="email"/>
         <result property="phone" column="phone"/>
@@ -30,8 +30,8 @@
 
     <sql id="Base_Column_List">
         id
-        ,account,password,unionId,mpOpenId,name,
-        avatar,profile,sex,email,phone,
+        ,userAccount,userPassword,unionId,mpOpenId,userName,
+        userAvatar,userProfile,sex,email,phone,
         userRole,vipNumber,vipCode,vipExpireTime,shareCode,
         inviteUser,editTime,createTime,updateTime,isDelete
     </sql>

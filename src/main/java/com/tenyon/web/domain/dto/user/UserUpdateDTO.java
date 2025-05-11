@@ -18,10 +18,10 @@ public class UserUpdateDTO implements Serializable {
     private Long id;
 
     @Schema(description = "用户昵称")
-    private String name;
+    private String userName;
 
     @Schema(description = "账号")
-    private String account;
+    private String userAccount;
 
     @Schema(description = "性别")
     private Integer sex;
