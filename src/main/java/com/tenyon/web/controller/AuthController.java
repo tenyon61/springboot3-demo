@@ -1,9 +1,9 @@
 package com.tenyon.web.controller;
 
-import com.tenyon.web.common.domain.vo.resp.RtnData;
-import com.tenyon.web.common.exception.BusinessException;
-import com.tenyon.web.common.exception.ErrorCode;
-import com.tenyon.web.common.exception.ThrowUtils;
+import com.tenyon.common.domain.vo.resp.RtnData;
+import com.tenyon.common.exception.BusinessException;
+import com.tenyon.common.exception.ErrorCode;
+import com.tenyon.common.exception.ThrowUtils;
 import com.tenyon.web.domain.dto.user.UserLoginDTO;
 import com.tenyon.web.domain.dto.user.UserRegisterDTO;
 import com.tenyon.web.domain.entity.User;
@@ -35,9 +35,9 @@ public class AuthController {
         if (userLoginDTO == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        String account = userLoginDTO.getUserAccount();
-        String password = userLoginDTO.getUserPassword();
-        LoginUserVO loginUserVO = userService.login(account, password);
+        String userAccount = userLoginDTO.getUserAccount();
+        String userPassword = userLoginDTO.getUserPassword();
+        LoginUserVO loginUserVO = userService.login(userAccount, userPassword);
         return RtnData.success(loginUserVO);
     }
 
@@ -47,10 +47,10 @@ public class AuthController {
         if (userRegisterDTO == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        String account = userRegisterDTO.getUserAccount();
-        String password = userRegisterDTO.getUserPassword();
+        String userAccount = userRegisterDTO.getUserAccount();
+        String userPassword = userRegisterDTO.getUserPassword();
         String checkPassword = userRegisterDTO.getCheckPassword();
-        long userId = userService.register(account, password, checkPassword);
+        long userId = userService.register(userAccount, userPassword, checkPassword);
         return RtnData.success(userId);
     }
 

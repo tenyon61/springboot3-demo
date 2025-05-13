@@ -1,13 +1,14 @@
 package com.tenyon.web.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaCheckRole;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.tenyon.web.common.annotation.AuthCheck;
-import com.tenyon.web.common.constant.BmsConstant;
-import com.tenyon.web.common.constant.UserConstant;
-import com.tenyon.web.common.domain.vo.resp.RtnData;
-import com.tenyon.web.common.exception.BusinessException;
-import com.tenyon.web.common.exception.ErrorCode;
-import com.tenyon.web.common.exception.ThrowUtils;
+import com.tenyon.common.constant.BmsConstant;
+import com.tenyon.common.constant.UserConstant;
+import com.tenyon.common.domain.vo.resp.RtnData;
+import com.tenyon.common.exception.BusinessException;
+import com.tenyon.common.exception.ErrorCode;
+import com.tenyon.common.exception.ThrowUtils;
 import com.tenyon.web.domain.dto.user.UserAddDTO;
 import com.tenyon.web.domain.dto.user.UserQueryDTO;
 import com.tenyon.web.domain.dto.user.UserUpdateDTO;
@@ -41,7 +42,7 @@ public class UserController {
 
     // region 增删改查
 
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+    @SaCheckRole(UserConstant.ADMIN_ROLE_KEY)
     @Operation(summary = "创建用户")
     @PostMapping("/add")
     public RtnData<Long> addUser(@RequestBody UserAddDTO userAddDTO) {
@@ -60,7 +61,7 @@ public class UserController {
         return RtnData.success(user.getId());
     }
 
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+    @SaCheckRole(UserConstant.ADMIN_ROLE_KEY)
     @Operation(summary = "删除用户")
     @DeleteMapping("/delete/{id}")
     public RtnData<Boolean> deleteUser(@PathVariable long id) {
@@ -69,7 +70,7 @@ public class UserController {
         return RtnData.success(true);
     }
 
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+    @SaCheckRole(UserConstant.ADMIN_ROLE_KEY)
     @Operation(summary = "更新用户")
     @PostMapping("/update")
     public RtnData<Boolean> updateUser(@RequestBody UserUpdateDTO userUpdateDTO) {
@@ -83,7 +84,7 @@ public class UserController {
         return RtnData.success(true);
     }
 
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+    @SaCheckRole(UserConstant.ADMIN_ROLE_KEY)
     @Operation(summary = "根据 id 获取用户（仅管理员）")
     @GetMapping("/get")
     public RtnData<User> getUserById(long id) {
@@ -103,7 +104,7 @@ public class UserController {
         return RtnData.success(userService.getUserVO(user));
     }
 
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+    @SaCheckRole(UserConstant.ADMIN_ROLE_KEY)
     @Operation(summary = "分页获取用户列表（仅管理员）")
     @PostMapping("/getUserPage")
     public RtnData<Page<User>> getUserPage(@RequestBody UserQueryDTO userQueryRequest) {
@@ -114,7 +115,7 @@ public class UserController {
         return RtnData.success(userPage);
     }
 
-    @Operation(summary = "分页获取用户封装列表（仅管理员）")
+    @Operation(summary = "分页获取用户封装列表")
     @PostMapping("/getUserVOPage")
     public RtnData<Page<UserVO>> getUserVOPage(@RequestBody UserQueryDTO userQueryRequest) {
         if (userQueryRequest == null) {
@@ -134,6 +135,7 @@ public class UserController {
 
     // endregion
 
+    @SaCheckLogin
     @Operation(summary = "更新个人信息")
     @PostMapping("/updateMy")
     public RtnData<Boolean> updateMyUser(@RequestBody UserUpdateMyDTO userUpdateMyDTO) {
@@ -149,6 +151,7 @@ public class UserController {
         return RtnData.success(true);
     }
 
+    @SaCheckRole(UserConstant.ADMIN_ROLE_KEY)
     @Operation(summary = "重置密码")
     @PutMapping("/resetPwd/{id}")
     public RtnData<Boolean> resetPwd(@PathVariable long id) {

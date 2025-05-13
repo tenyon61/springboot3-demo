@@ -1,6 +1,6 @@
 package com.tenyon.web.domain.dto.user;
 
-import com.tenyon.web.common.constant.BmsConstant;
+import com.tenyon.common.constant.BmsConstant;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
