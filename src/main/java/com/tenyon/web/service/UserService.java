@@ -82,10 +82,10 @@ public interface UserService extends IService<User> {
     /**
      * 获取查询条件
      *
-     * @param userQueryRequest 用户查询请求
+     * @param userQueryDTO 用户查询请求
      * @return sql 查询条件
      */
-    QueryWrapper<User> getQueryWrapper(UserQueryDTO userQueryRequest);
+    QueryWrapper<User> getQueryWrapper(UserQueryDTO userQueryDTO);
 
     /**
      * 根据openId获取用户

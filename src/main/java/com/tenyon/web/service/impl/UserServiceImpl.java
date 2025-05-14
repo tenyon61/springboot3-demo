@@ -161,20 +161,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public QueryWrapper<User> getQueryWrapper(UserQueryDTO userQueryRequest) {
-        if (userQueryRequest == null) {
+    public QueryWrapper<User> getQueryWrapper(UserQueryDTO userQueryDTO) {
+        if (userQueryDTO == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为空");
         }
-        Long id = userQueryRequest.getId();
-        String userName = userQueryRequest.getUserName();
-        String userAccount = userQueryRequest.getUserAccount();
-        String userProfile = userQueryRequest.getUserProfile();
-        String userRole = userQueryRequest.getUserRole();
-        String sortField = userQueryRequest.getSortField();
-        String sortOrder = userQueryRequest.getSortOrder();
+        Long id = userQueryDTO.getId();
+        String userName = userQueryDTO.getUserName();
+        String userAccount = userQueryDTO.getUserAccount();
+        String userProfile = userQueryDTO.getUserProfile();
+        String userRole = userQueryDTO.getUserRole();
+        String sortField = userQueryDTO.getSortField();
+        String sortOrder = userQueryDTO.getSortOrder();
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(ObjectUtil.isNotEmpty(id), "id", id);
-        queryWrapper.eq(StrUtil.isNotBlank(userAccount), "userAcount", userAccount);
+        queryWrapper.eq(StrUtil.isNotBlank(userAccount), "userAccount", userAccount);
         queryWrapper.eq(StrUtil.isNotBlank(userRole), "userRole", userRole);
         queryWrapper.like(StrUtil.isNotBlank(userProfile), "userProfile", userProfile);
         queryWrapper.like(StrUtil.isNotBlank(userName), "userName", userName);
