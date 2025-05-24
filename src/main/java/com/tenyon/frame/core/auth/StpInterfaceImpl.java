@@ -1,4 +1,4 @@
-package com.tenyon.framework.core.auth;
+package com.tenyon.frame.core.auth;
 
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpUtil;
